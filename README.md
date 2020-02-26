@@ -7,6 +7,8 @@ Patients are able to search for healthcare services and providers to book appoin
 
 Healthcare Providers are able to view appointment history, upcoming appointments, patient history and start consultation (allowing them to write notes and prescribe medicine during the consultation). 
 
+Both users must log in before viewing information.
+
 ## Instructions 
 1. Download the Repository
 2. Open the terminal and switch to the repository
