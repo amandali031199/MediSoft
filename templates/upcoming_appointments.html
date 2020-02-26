@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html>
+<head>
+
+<style>
+  
+    table {
+        border-collapse:collapse; 
+        border-color:#000000; 
+        border-style:solid; 
+        border-width:2px;
+    }
+
+    td, th {
+        padding: 8px;
+        border-color:#ddd; /*grey*/
+        border-style:solid; 
+        border-width:1px;
+    }
+    
+</style>
+
+<body>
+<br>
+<h1 style="padding-left: 30px;"> Upcoming Appointments </h1>
+
+<div style="padding-left: 30px;">
+<table style="width: 97%; text-align:centre;">
+    <col width = "200">
+    <col width = "200">
+    <col width = "200">
+    <col width = "200">
+    <col width = "200">
+    <col width = "200">
+{% if patient == False %}
+    <col width = "200">
+{% endif %}
+
+{% if appointmentlist|length == 0%}
+    <p> You do not have any upcoming appointments </p>   
+{% else %}
+<tr class="header" style="background-color: #f1f1f1;">
+    <th> Start Time</th>
+    <th>End Time</th>
+    <th>Date</th>
+    <th>Health Centre</th>
+    {% if patient == False %}
+        <th>Patient</th>  
+    {% endif %}
+    {% if patient == True %}
+        <th>Provider</th>
+    {%endif %}
+    <th>Reason For Visit</th>
+    {% if patient == False %}
+    <th>Consultation </th>
+    {% endif %}
+</tr>
+{% for i in range(appointmentlist|length) %} 
+    <tr style="text-align: center;">
+        <td><div>{{appointmentlist[i].starttime}}<br></div></td>
+        <td><div>{{appointmentlist[i].endtime}}<br></div></td>   
+        <td><div>{{appointmentlist[i].date}}<br></div></td>
+        <td><div> <a href="{{url_for('health_centre_profile', name = appointmentlist[i].centre.centre_name)}}">{{appointmentlist[i].centre.centre_name}}</a><br></div></td>
+        {% if patient == False %}
+            <td><div> <a href="{{url_for('patient_profile',name = appointmentlist[i].get_patient().name)}}" >{{appointmentlist[i].get_patient().name}}</a><br></div></td>
+        {% endif %}
+        {% if patient == True %}
+            <td><div> <a href="{{url_for('health_provider_profile', name = appointmentlist[i].provider.name)}}" >{{appointmentlist[i].provider.name}}</a><br></div></td>
+        {%endif %}
+        <td><div>{{appointmentlist[i].reason}}</div></td>
+        {% if patient == False and appointmentlist[i].finish == False %}
+            <td><div> <a href="{{url_for('create_notes', appointment_id = i, name = user_name)}}" class="button">Start</a><br></div></td>
+        {%endif %}
+        {% if patient == False and appointmentlist[i].finish == True %}
+            <td><div> <p>Consultation has ended</p><br></div></td>
+        {%endif %}
+        </div>
+    </tr>
+{% endfor %}
+
+</table>           
+            
+</div>
+{% endif %}
+</body>
+</html>
+{% endblock %}

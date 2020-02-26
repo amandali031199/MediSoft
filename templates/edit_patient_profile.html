@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<div style="padding-left: 30px;">
+    <div>
+        <h1>Editing for {{ patient_name }} </h1> <!-- insert patient name-->
+        
+        <h2 style="border: 1px black;">Update Personal Information</h2>
+        Email: {{patient_email}}
+        <p>Current Phone number: {{patient_phone_no}} </p>
+        <p>Current Medicare number: {{patient_medicare_no}} </p>
+        <form method = "POST">
+          Update Phone Number:<br>
+          <input type="text" name="new_phone_number" value="{{patient_phone_no}}"/><br>
+          
+          Update Medicare Number:<br>
+          <input type="text" name="new_medicare_no" value="{{patient_medicare_no}}"/><br><br>
+          <button type = "submit" name = "submit" value = "Submit" class="button">Save</button>
+        </form>
+    </div>
+    {{error_msg}}
+    </div>
+</div>
+{% endblock %}

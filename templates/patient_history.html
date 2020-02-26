@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<style>
+  
+    table {
+        border-collapse:collapse; 
+        border-color:#000000; 
+        border-style:solid; 
+        border-width:2px;
+    }
+
+    td, th {
+        padding: 8px;
+        border-color:#ddd; /*grey*/
+        border-style:solid; 
+        border-width:1px;
+    }
+    
+</style>
+<body>
+
+<h1> Patient History </h1>
+
+{% if appointmentlist|length == 0 %}
+    <p>You do not have any patients </p>
+{% else %}
+<p>
+<div style="padding-left: 30px;">
+<table style="width: 97%; text-align:centre;">
+    <col width = "200">
+    <col width = "200">
+    <col width = "200">
+<tr class="header" style="background-color: #f1f1f1;">
+    <th>Patient name</th>
+    <th>Most Recent Appointment</th>
+    <th>Centre</th>
+</tr>
+
+{% for i in range(appointmentlist|length) %} 
+    <tr style="text-align: center;">
+    <td><div><a href="{{url_for('patient_profile',name = appointmentlist[i].get_patient().name)}}">{{appointmentlist[i].get_patient().name}}<br></div></td>
+    <td><div>{{appointmentlist[i].date}}<br></div></td>
+    <td><div><a href="{{url_for('health_centre_profile', name = appointmentlist[i].centre.centre_name)}}">{{appointmentlist[i].centre.centre_name}}</a><br></div></td>
+</tr>
+{% endfor %}
+
+</table>           
+</div>            
+           
+</p>
+{% endif %}
+</body>
+{% endblock %}

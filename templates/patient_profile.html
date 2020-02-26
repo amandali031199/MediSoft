@@ -1,0 +1,89 @@
+<!--I don't know how to substitute all the details in-->
+
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html>
+<br>
+<style>
+  
+    table {
+        border-collapse:collapse; 
+        border-color:#ddd; 
+        border-style:solid; 
+        border-width:2px;
+    }
+
+    td, th {
+        padding: 4px;
+        border-color:#ddd; /*grey*/
+        border-style:solid; 
+        border-width:1px;
+    }
+    
+</style>
+<body>
+<div style="padding-left: 30px;">
+    <div>
+        <h1> Name: {{ patient_name }} </h1> <!-- insert patient name-->
+        
+        <h1 style="border: 1px black;">Personal Information</h1>
+        Email: {{patient_email}}
+        <p>Phone number: {{patient_phone_no}} </p>
+        <p>Medicare number: {{patient_medicare_no}} </p>
+        
+    </div>
+    <div> {% if can_view == True %}
+        <h1 style="border: 1px, black;">Medical History</h1>
+    {% if history == False %}
+        No notes written.
+    {% else %}   
+        <table style="width: 97%; text-align:center;">
+        <col width = "200">
+        <col width = "200">
+        <col width = "200">
+        <col width = "200">
+        <col width = "200">
+        <col width = "200">
+
+        <tr class="header" style="background-color: #f1f1f1;">
+        <th>Date </th>
+        <th>Provider</th>
+        <th>Centre</th>
+        <th>Consultation Notes</th>
+        <th>Prescribed Medications</th>  
+        <th>Edit Notes</th>  
+        </tr>
+       {% for i in range(user.appointments|length) %}
+           {% if user.appointments[i].finish == True %}
+            <tr style="text-align: center;">
+            <td><div>{{user.appointments[i].date}}<br></div></td>
+            <td><div>{{user.appointments[i].provider.name}}<br></div></td>
+            <td><div>{{user.appointments[i].centre.centre_name}}<br></div></td>
+            <td><div>{{user.appointments[i].notes}}<br></div></td>
+            <td><div>{{user.appointments[i].medications}}<br></div></td>
+            {% if current_user == user.appointments[i].provider %}
+            <td><div><a href = "{{url_for('edit_notes', appointment_id = i, name = user.name )}}" class="button">Edit</a><br><div></td>
+            {% else %}
+            <td><div><p>You do not have access to edit</p></div></td>
+            {% endif %}
+           {% endif %}
+       {% endfor %}
+
+    {% endif %}
+    {% else %}
+        <p>You do not have permission to view {{patient_name }}'s medical history</p>
+    {% endif %}
+   
+    </div>
+</div>
+    <br>
+    <div style="text-align: right; padding-right: 35px">
+    {% if current_user.name == patient_name %}
+        <a href="{{ url_for('edit_profile') }}" class="button">Update my personal information</a><br>
+    {% endif %}
+    <br><br><br>
+    </div>
+</body>
+</html>
+{% endblock %}

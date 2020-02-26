@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+    <form method = "POST">
+    <h1>Appointment Notes</h1><br>
+    <h4>Notes about the patient {{patient_name}}</h4><br>
+    <textarea  rows="4" cols="50" name = "notes" value = "{{notes}}" contenteditable="true" >{{notes}}
+    </textarea><br>
+    <h4>Prescribed Medication</h4><br>
+    <textarea rows="4" cols="50"id = "textarea"  name = "medication" value = "{{medication}}" contenteditable="true">{{medication}}
+    </textarea><br>
+    <div style = "float:right">
+    <button type = "submit" name = "btn_identifier" value = "continue" class = "button" >Save Changes</button>
+    </div>
+    </form>
+</body>
+</html>
+{% endblock %}

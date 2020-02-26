@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<style>
+  
+    table {
+        border-collapse:collapse; 
+        border-color:#000000; 
+        border-style:solid; 
+        border-width:2px;
+    }
+    td, th {
+        padding: 8px;
+        border-color:#969696; /*grey*/
+        border-style:solid; 
+        border-width:1px;
+    }
+    
+</style>
+
+<div style="padding-bottom: 100px;">    
+<h1 style="text-align: center; padding-top: 150px; font-size: 50px; font-family: Helvetica;">Welcome Back {{name}}! </h1>    
+    
+<form action="{{ url_for('home') }}" method="get">
+    <h2 style="text-align:center;">Search: <input type="text" name="search" placeholder=" What would you like to search for?" style="height:40px;width:800px;font-size:16px;">
+ 
+    <button>Search</button></h2>
+    
+    <div style="text-align:center;">  
+
+        <span style="width:400px; display:inline-block">
+            <input type="radio" name="select" value="provider_btn"> Healthcare Providers:
+            <select name="providers">
+                {% for i in provider_choices %}
+                <option name="chosen_provider_detail" value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </span>
+       
+        <input type="radio" name="select" value="centre_btn"> Healthcare Centres: 
+        <select name="centres">
+            {% for i in centre_choices %}
+            <option name="chosen_centre_detail" value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select><br>
+    </div>
+    
+     <!--hidden radio button to set select as a default of null-->
+    <input type="hidden" name="select" value="null">
+</form>
+
+
+<br><br><br><br>
+<div style="padding-left: 30px;">
+
+{% if no_results == 1 %}
+    {% if request.args.get('search') != None %}
+        {% if provider_chosen == -1 %}
+        Please select the search option Healthcare Providers or Healthcare Centres when searching. 
+        {% endif %}
+    {% endif %}
+        {% if service_chosen == 2 and name_chosen == 2 %}
+             Sorry.Please pick a category
+        {% elif c_name_chosen == 2 and suburb_chosen == 2 %}
+             Sorry.Please pick a category
+        {% elif results|length == 0 and provider_chosen != -1 %}
+             Sorry. No results Found. 
+        {% endif %}
+{% elif no_results == 0 %}
+ <h2> Results found: </h2><br>
+    {% if provider_chosen == 1 %}
+
+    <table style="width:97%; text-align: center;">
+        <tr style="background-color: #90cccc;">
+            <th style="text-align: center; padding: 10px;">Name of Provider</th>
+            <th style="text-align: center; padding: 10px;">Rating</th>
+            <th style="text-align: center; padding: 10px;">Contact</th>
+            <th style="text-align: center; padding: 10px;">Service</th>
+        </tr>
+    {% if name_chosen == 1 %}
+        {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_provider_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ p_rating[d] }}</td>
+                <td>{{ p_contact[d] }}</td>
+                <td>{{ service[d] }} </td>
+            </tr>
+        {% endfor %}
+       
+    {% endif %}
+    {% if service_chosen == 1 %}
+       {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_provider_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ p_rating[d] }}</td>
+                <td>{{ p_contact[d] }}</td>
+                <td>{{ service[d] }} </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    {% if pick_category == 1 %}
+        {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_provider_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ p_rating[d] }}</td>
+                <td>{{ p_contact[d] }}</td>
+                <td>{{ service[d] }} </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    {% elif provider_chosen == 0 %}
+   <table style="width:97%; text-align: center;">
+        <tr style="background-color: #90cccc;">
+            <th style="text-align: center; padding: 10px;">Name of Centre</th>
+            <th style="text-align: center; padding: 10px;">Rating</th>
+            <th style="text-align: center; padding: 10px;">Centre Type</th>
+            <th style="text-align: center; padding: 10px;">Suburb</th>
+        </tr>
+        {% if c_name_chosen == 1 %}
+            {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_centre_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ c_rating[d] }}</td>
+                <td>{{ c_type[d] }}</td>
+                <td>{{ suburb[d] }} </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+        {% if suburb_chosen == 1 %}
+            {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_centre_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ c_rating[d] }}</td>
+                <td>{{ c_type[d] }}</td>
+                <td>{{ suburb[d] }} </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+        {% if pick_category == 1 %}
+        {% for d in range(results|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_centre_profile',name=results[d])}}">{{ results[d] }}</a></td>    
+                <td>{{ c_rating[d] }}</td>
+                <td>{{ c_type[d] }}</td>
+                <td>{{ suburb[d] }} </td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    {% elif provider_chosen == -1 %}
+        Please select the search option Healthcare Providers or Healthcare Centres when searching.
+    {% endif %}
+    
+{% endif %}
+</div>
+
+
+</div>
+{% endblock %}

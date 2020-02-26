@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1 style="padding-left: 30px; font-family: Helvetica;"> Welcome Back {{ name }}!</h1>
+    <br>
+    
+    <h2 style="text-align:center;">
+    
+    <div class="boxed">
+        
+        <a href="{{url_for('past_appointments')}}">Appointment history</a> <br> <br>
+        <a href="{{url_for('upcoming_appointments')}}">Upcoming appointments</a> <br> <br>
+        <a href="{{url_for('patient_history')}}">Patient history</a> <br>
+    </div>
+
+
+   
+    </div>
+</h2>
+
+
+    
+</div>
+{% endblock %}

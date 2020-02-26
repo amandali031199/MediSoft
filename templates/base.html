@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		{% block head %}{% endblock %}
+	</head>
+	<style>
+	.boxed {
+	 text-align: center;
+	 width: 50px;
+	 padding: 30px;
+     border: 10px solid #4ab2c4;
+     width: 90%;
+     margin: auto;
+    }
+        .star-rating {
+    direction: rtl;
+    display: inline-block;
+    padding: 20px
+    }
+    .star-rating input[type=radio] {
+        display: none
+    }
+    .star-rating label {
+        color: #bbb;
+        font-size: 18px;
+        padding: 0;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input[type=radio]:checked ~ label {
+        color: #7fd3e1
+}
+
+    .button {
+    background-color: #66CCCC;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}   
+    .button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    
+	</style>
+	<!--Include CSS-->
+    <style type="text/css"> 
+         table, th, td {
+    border: 1px solid black;
+}
+    </style>
+	<body style="background-color: #f9f6ef; margin: 0px;">
+		<div style="background-color: white;">
+		<header style="padding-top: 50px; padding-left: 30px; font-size: 20px; font-family: Helvetica;">
+            <title>Medisoft</title>
+			<h1>Medisoft</h1>
+		</header>	
+             <a href="{{ url_for('login') }}">Login</a>
+        </div>
+			
+			<nav style="text-align: center; padding-top: 15px; background-color: #4ab2c4;">
+			    
+			    {% if not current_user.is_provider %}
+			        <a href="{{url_for('home')}}" style="width:200px; display:inline-block; text-decoration: none; color: white;">
+			    {% else %}
+			        <a href="{{url_for('home_provider')}}" style="width:200px; display:inline-block; text-decoration: none; color: white;">
+			    {% endif %}
+			        Homepage</a> 
+			    {% if current_user.is_provider %}
+                    <a href="{{url_for('health_provider_profile', name = current_user.name)}}" style="width:250px; display:inline-block; text-decoration: none; color: white;">
+                {% else %}
+                    <a href="{{url_for('patient_profile', name = current_user.name)}}" style="width:250px; display:inline-block; text-decoration: none; color: white;">
+                {% endif %}
+                         
+			    My Profile</a> 
+	        	<a href="{{url_for('appointment_history')}}" style="width:250px; display:inline-block; text-decoration: none; color: white;">Appointments</a> 
+			    <a href="{{url_for('logout')}}" style="width:150px; display:inline-block; text-decoration: none; color: white;">Logout</a> 
+		
+			<br>
+			<hr>	 
+			</nav>  
+			
+			<br>
+			{% block content %}{% endblock %}
+		
+	</body>
+
+</html>

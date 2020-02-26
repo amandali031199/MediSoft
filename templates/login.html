@@ -1,0 +1,33 @@
+{% block content %}
+<div>
+<body style="background-color: #f9f6ef; margin: 0px;">
+    <div style="background-color: white;">
+    <header style="padding-top: 50px; padding-left: 30px; font-size: 20px; font-family: Helvetica;">
+        <title>Medisoft</title>
+		<h1>Medisoft</h1>
+	</header>
+	<br>
+	</div>	
+
+	<nav style="text-align: center; padding-top: 15px; background-color: #4ab2c4;">
+	<br>
+	<hr>	 
+	</nav>  
+	<br>
+
+    <form method="POST" style="padding-left: 30px;">
+         <h1>Login form:</h1>
+
+         Username: <input type="text" input placeholder="Enter email" name="email"/> <br>
+         Password: <span style="padding-left: 6px;"><input type="password" input placeholder="Enter password" name="password"/></span>
+
+         <button type="submit" class="button">Login</button>
+     </form>
+
+    <p> {{message}} </p>
+
+
+</form>
+    </body>
+</div>
+{% endblock %}

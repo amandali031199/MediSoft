@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+<!--Include CSS-->
+    
+    <style type="text/css"> 
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+{% block content %}
+<form method = "POST">
+<div>
+    <br>
+    <div style="padding-left: 30px;">
+    <h1> Health Centre </h1>
+    <br>
+    Name of Health Centre: {{centre_name}}
+    <p> 
+    Location: {{centre_location}}
+    </p>
+    <p>
+    Centre Type: {{centre_type}}
+    </p>
+    <p>
+    ABN: {{centre_abn}}
+    </p>
+    <p>
+    Centre Number: {{centre_number}}
+    </p>
+    <p> 
+    Rating: {{average_rating}}
+    </p>
+    </div>
+    {% if (affiliated_provider_names|length) != 0 %}
+    <div style="padding-left: 30px;">
+    <table style="width:97%; text-align: center;">
+
+        <tr>
+            <th> 
+            Health Provider
+            </th>
+            <th>
+            Type of Health Service
+            </th>
+            {% if is_prov == 0 %}
+            <th>
+            Booking button
+            </th>
+            {% endif %}
+        </tr>
+        
+        {% for d in range(affiliated_provider_names|length) %}
+            <tr>
+                <td><a href= "{{url_for('health_provider_profile',name=affiliated_provider_names[d])}}">{{ affiliated_provider_names[d] }}</a></td>  
+                <td> {{affiliated_provider_service[d]}}</td>
+                {% if is_prov == 0 %}
+                <td> 
+                <a href= "{{url_for('booking',provider_name = affiliated_provider_names[d], centre = centre_name, start = start_work[d], end = end_work[d])}}" class="button">Book</a> 
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        
+        
+    </table>
+    </div>
+    {% else %}
+    <div style="padding-left: 30px;"> This health centre has no providers. </div> 
+    {% endif %}
+    {% if is_prov == 0 %}
+    <div style="padding-left: 30px;">
+
+    <html lang="en" dir="ltr">
+	<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+    Rate this centre:
+		<div class="star-rating">
+			<input id="star-5" type="radio" name="rating" value=5>
+			<label for="star-5" title="5 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-4" type="radio" name="rating" value=4>
+			<label for="star-4" title="4 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-3" type="radio" name="rating" value=3>
+			<label for="star-3" title="3 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-2" type="radio" name="rating" value=2>
+			<label for="star-2" title="2 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-1" type="radio" name="rating" value=1>
+			<label for="star-1" title="1 star">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input type="hidden" name="rating" value=0>
+		</div>
+		<button type="submit" name = "btn_identifier" value = "submit" >Submit</button><br>
+	</body>
+</html>
+    </div>
+    {% endif %}
+    
+    <br><br><br>
+    
+</div>
+</form>
+{% endblock %}

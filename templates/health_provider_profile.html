@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+<!--Include CSS-->
+<style>
+  
+    table {
+        border-collapse:collapse; 
+        border-color:#ddd; 
+        border-style:solid; 
+        border-width:2px;
+    }
+
+    td, th {
+        padding: 4px;
+        border-color:#ddd; /*grey*/
+        border-style:solid; 
+        border-width:1px;
+    }
+    
+</style>
+{% block content %}
+<form method = "POST">
+<div>
+    <div style="padding-left: 30px;">
+    <br>
+    <h1> Health Provider </h1>
+    <br>
+        Name of Health Provider: {{provider_name}}
+    <p> 
+        Provider number: {{provider_no}}
+    </p>
+     <p> 
+        Phone number: {{provider_phone}}
+    </p>
+    <p> 
+        Service: {{provider_service}}
+    </p>
+    <p> 
+        Rating: {{average_rating}}
+    </p>
+    </div>
+    <table style="width: 97%; text-align:center;">
+        <col width = "200">
+        <col width = "200">
+       {% if is_prov == 0 %} <col width = "200"> {% endif %}
+
+        <tr class="header" style="background-color: #f1f1f1;">
+            <th > 
+            Health Centre</th>
+            <th>Working Hours</th>
+            {% if is_prov == 0 %}
+            <th>Booking button</th>
+            {% endif %}
+        </tr>
+        <form method = "POST">
+        {% for d in range(affiliated_centres|length) %}
+            <tr style="text-align: center;">
+                <td><a href= "{{url_for('health_centre_profile',name=affiliated_centres[d])}}">{{ affiliated_centres[d] }}</a></td> 
+                 
+                <td> {{start_work[d]}} - {{end_work[d]}} </td>
+                {% if is_prov == 0 %}
+                <td> 
+                <a href= "{{url_for('booking', provider_name= provider_name, centre = affiliated_centres[d], start = start_work[d], end =end_work[d])}}" class="button">Book</a> 
+                </td>
+                {% endif %}
+            </tr>
+        </form>
+        {% endfor %}
+        
+        
+
+    </table>
+    {% if is_prov == 0 %}
+    <div style="padding-left: 30px;">
+
+    <html lang="en" dir="ltr">
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+    Rate this provider:
+		<div class="star-rating">
+			<input id="star-5" type="radio" name="rating" value=5>
+			<label for="star-5" title="5 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-4" type="radio" name="rating" value=4>
+			<label for="star-4" title="4 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-3" type="radio" name="rating" value=3>
+			<label for="star-3" title="3 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-2" type="radio" name="rating" value=2>
+			<label for="star-2" title="2 stars">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input id="star-1" type="radio" name="rating" value=1>
+			<label for="star-1" title="1 star">
+					<i class="active fa fa-star" aria-hidden="true"></i>
+			</label>
+			<input type="hidden" name="rating" value=0>
+		</div>
+		<button type="submit" name = "btn_identifier" value = "submit" >Submit</button><br>
+	</body>
+</html>
+    </div>
+    {% endif %}
+    <br><br><br>
+    <div style="text-align: right; padding-right: 35px">
+    {% if current_user.name == provider_name %}
+        <a href="{{ url_for('edit_profile') }}" class="button">Update my personal information</a><br>
+    {% endif %}
+    <br><br><br>
+    </div>
+</form>
+</div>
+{% endblock %}

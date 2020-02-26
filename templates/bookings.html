@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<!-- date picker code from http://jqueryui.com/datepicker/#min-max-->
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Restrict date range</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+1M", dateFormat: 'dd-mm-yy' });
+  } );
+  </script>
+</head>
+<body>
+<h1>Booking Your Appointment</h1>
+<form method = "POST">
+<p>Select Date: <input type="text" id="datepicker" name = "date" value = "{{date}}" placeholder = "{{date}}"></p>
+<button type="submit" name = "btn_identifier" value = "viewtimes" class="button" >View Available Times</button><br>
+{% if viewtimes %}
+    {% for start, end in valid_times.items() %}
+        <input type="radio" name= time value="{{start}}">{{start}} to {{end}}<br>       
+    {% endfor %}
+{% endif %}	
+<p>	
+
+Reason for Visit: <br>
+<textarea rows="4" cols="50" name = reason value = "{{reason}}" maxlength = "100">
+</textarea>
+</p>
+<div style = "float:right">
+<button type = "submit" name = "btn_identifier" value = "finishbooking" class="button">Finish Booking</button>
+</div>
+</form>	
+
+{{message}}
+</body>
+</html>
+
+
+{% endblock %}
