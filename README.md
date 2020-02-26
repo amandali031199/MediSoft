@@ -1,5 +1,6 @@
 # MediSoft
-![](medisoft.gif.sb-f398e36d-EcTPgf)
+![](medisoft1.gif)
+![](medisoft2.gif)
 An online healthcare appointment management system (HAMS) that would streamline the process of patients booking healthcare appointments and general practitioners sending referrals to specialists. This was created in a team and I implemented the backend and frontend for the booking algorithm and history of patients and appointments. 
 This project was designed using object-oriented design principles and implemented using **Python, Flask,Pickle for database, Jinja2, CSS and HTML. Agile Development** was tested through adapting the website to changes in specifications after the first iteration. 
 
